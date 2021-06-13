@@ -15,8 +15,8 @@ with open("sorted_movies.pickle", 'rb') as handle:
     sorted_movies = pickle.load(handle)
 
 movie_df = pd.read_csv("Movies.csv",index_col=["movie_id"])
-movie_df_rate = pd.read_csv("Movies_rating.csv",index_col=["movie_id"])
-movie_rated = list(movie_df_rate.title)
+# movie_df_rate = pd.read_csv("Movies_rating.csv",index_col=["movie_id"])
+movie_rated = list(movie_df.title)
 
 
 x = (movie_df.loc[sorted_movies[:30]])
