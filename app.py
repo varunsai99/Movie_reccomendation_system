@@ -8,6 +8,8 @@ from dependencies import *
 
 app = Flask(__name__)
 
+# try reloading the chrome using ctrl + shift + R for CSS to work
+
 @app.route("/",methods=["GET","POST"])
 def index():
     sample_train_sparse_matrix = sparse.load_npz("./data/sample_train_sparse_matrix.npz")
