@@ -3,30 +3,50 @@
 <html>
     <head>
         <title>{{data[0]}}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
+
     </head>
     <body>
-        <h1>{{data[0]}}</h1>
-        <h3>Avg. Rating is {{data[1]}}</h3> 
-        <h2>Rate this movie</h2>
-        <form action="/movie" method="POST">
-            <input type="hidden" name="movie_name" value="{{data[0]}}">
-            <select name="rating">
-                <option disabled selected>Rating</option>
-                <option value="1" name="rating">1</option>
-                <option value="2" name="rating">2</option>
-                <option value="3" name="rating">3</option>
-                <option value="4" name="rating">4</option>
-                <option value="5" name="rating">5</option>
-            </select>
-            <input type="submit" value="Submit">
-        </form>
-        <br><br>
-        <h2>Reccomendations based on this movie</h2>
+        <h2 class="main_header">Movie Reccomendation System</h2>
+        <a href="/" class="btn btn-info btn-lg home-btn">
+            <span class="glyphicon glyphicon-home">Home</span>
+        </a>
+        <div id='movie-content' class="row">
+            <div class="col-md-6 movie-title">
+                <div class="movie">
+                    <span class="movie-name">{{data[0]}}</span>
+                </div>
+            </div>
+            <div class="col-md-6 movie-data">
+                <span>Avg. Rating is {{data[1]}}</span>
+                {% if rated %}
+                    <h3>You have rate this movie {{rated}}</h3>
+                {% endif %}
+                <br>
+                <span>Rate this movie</span>
+                <form action="/movie" method="POST" class="rating-form">
+                    <input type="hidden" name="movie_name" value="{{data[0]}}">
+                    <select name="rating">
+                        <option disabled selected>Rating</option>
+                        <option value="1" name="rating">1</option>
+                        <option value="2" name="rating">2</option>
+                        <option value="3" name="rating">3</option>
+                        <option value="4" name="rating">4</option>
+                        <option value="5" name="rating">5</option>
+                    </select>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+        </div>
+    
+        <h2 class="main_header" style="margin-top: 30px;">Reccomendations based on this movie</h2>
         {% for movie in reccomended_movies %}
-            <form action="/movie" method="POST">
-                <input type="submit" name="movie_name" value="{{movie}}">
+            <form action="/movie" method="POST" class="movie_form">
+                <input type="submit" name="movie_name" value="{{movie}}" class="btn btn-primary">
             </form>
-             <br/>
         {% endfor %}
     </body>
 </html>

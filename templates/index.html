@@ -3,21 +3,18 @@
 <html>
     <head>
         <title>Recommended System</title>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css')}}">
     </head> 
     <body>
-        <h2>Movie Reccomendations</h2>
-        <form action="/movie" method="POST" id="send" style="text-align: center;">
-            <input autofocus autocomplete="off" placeholder="Movie Name" type="input" name="movie_name" id="search">
-            <input type="submit" value="Search" id="sea">
+        <h2 class="main_header">Movie Reccomendation System</h2>
+        <form action="/movie" method="POST" id="send">
+            <div class="input-group mb-3 search-comp">
+                <input autocomplete="off" type="text" class="form-control" placeholder="Movie Name" aria-label="Username" aria-describedby="basic-addon1" name="movie_name" id="search" style="width: 70%;">
+            </div>
+            <button type="submit" class="btn btn-primary search-btn search-comp">Search</button>
             <ul class="list-group" id="result"></ul>
             <br>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -38,29 +35,38 @@
                 $('ul').on('click', 'li', function() {
                     var click_text = $(this).text();
                     document.getElementById("search").value = click_text
+                    document.querySelector("ul").innerHTML = ''
                 });
-
             </script>
-            
-            
         </form>
-        
-        <h2>High rated movies</h2>
+        <h2 class="main_header">High rated movies</h2>
         {% for movie in high_rated_movies %}
-            <form action="/movie" method="POST">
-                <input type="submit" name="movie_name" value="{{movie}}">
+            <form action="/movie" method="POST" class="movie_form">
+                <input type="submit" name="movie_name" class="btn btn-primary rated_movies" value="{{movie}}">
             </form>
-             <br/>
         {% endfor %}
 
-        {% if liked_movies %}
-            <h2>Movies according to your likes :)</h2>
-            {% for movie in liked_movies %}
-                <form action="/movie" method="POST">
-                    <input type="submit" name="movie_name" value="{{movie}}">
+        {% if liked_movie %}
+            <h2 class="main_header">Beacuse you liked {{liked_movie_name}}</h2>
+            {% for movie in liked_movie %}
+                <form action="/movie" method="POST" class="movie_form">
+                    <input type="submit" name="movie_name" class="btn btn-primary" value="{{movie}}">
                 </form>
-                <br/>
             {% endfor %}
         {% endif %}
+
+        {% if model_movies %}
+            <h2 class="main_header">Movies according to your likes :)</h2>
+            {% for movie in model_movies %}
+                <form action="/movie" method="POST" class="movie_form">
+                    <input type="submit" name="movie_name" class="btn btn-primary" value="{{movie}}">
+                </form>
+            {% endfor %}
+        {% endif %}
+
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     </body>
 </html>
